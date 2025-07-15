@@ -65,14 +65,14 @@ const mockTracks: Track[] = [
 ];
 
 // YouTube API key - you'll need to replace this with your actual API key
-const YOUTUBE_API_KEY = "YOUR_YOUTUBE_API_KEY";
+const YOUTUBE_API_KEY = "AIzaSyDBQ9OjY2XW8DY7-WpPb6Q2LURnWCzkoAY";
 const YOUTUBE_API_URL = "https://www.googleapis.com/youtube/v3";
 
 export const searchYouTubeMusic = async (query: string): Promise<Track[]> => {
   // For demonstration purposes, return mock data
   // In a real implementation, you would use the YouTube Data API
   
-  if (!YOUTUBE_API_KEY || YOUTUBE_API_KEY === "YOUR_YOUTUBE_API_KEY") {
+  if (!YOUTUBE_API_KEY || YOUTUBE_API_KEY === "AIzaSyDBQ9OjY2XW8DY7-WpPb6Q2LURnWCzkoAY") {
     // Return filtered mock data based on query
     return mockTracks.filter(track => 
       track.title.toLowerCase().includes(query.toLowerCase()) ||
