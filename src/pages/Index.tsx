@@ -124,21 +124,28 @@ const Index = () => {
               /* Home Content */
               <div className="space-y-8">
                 {/* Hero Section */}
-                <div className="bg-gradient-primary rounded-2xl p-8 text-white relative overflow-hidden">
+                <div className="bg-gradient-primary rounded-3xl p-10 text-white relative overflow-hidden shadow-elevated">
                   <div className="relative z-10">
-                    <h2 className="text-3xl font-bold mb-2">Welcome to TuneStream</h2>
-                    <p className="text-white/90 mb-6">
-                      Discover millions of songs from YouTube. Search, play, and enjoy your favorite music.
+                    <div className="inline-flex items-center gap-2 bg-white/20 rounded-full px-4 py-2 mb-4">
+                      <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                      <span className="text-sm font-medium">Now Streaming</span>
+                    </div>
+                    <h2 className="text-4xl font-bold mb-3 leading-tight">
+                      Welcome to <span className="text-accent-glow">TuneStream</span>
+                    </h2>
+                    <p className="text-white/90 mb-8 text-lg leading-relaxed max-w-md">
+                      Discover millions of songs from YouTube. Search, play, and enjoy your favorite music with enhanced audio experience.
                     </p>
                     <Button 
                       variant="secondary" 
-                      className="bg-white/20 text-white border-white/30 hover:bg-white/30"
+                      className="bg-white/20 text-white border-white/30 hover:bg-white/30 hover:scale-105 transition-all duration-300 rounded-xl px-6 py-3 font-semibold backdrop-blur-sm"
                     >
                       Start Listening
                     </Button>
                   </div>
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16"></div>
-                  <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full translate-y-12 -translate-x-12"></div>
+                  <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full -translate-y-20 translate-x-20 animate-pulse"></div>
+                  <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full translate-y-16 -translate-x-16 animate-pulse" style={{animationDelay: '0.5s'}}></div>
+                  <div className="absolute top-1/2 right-1/4 w-6 h-6 bg-white/20 rounded-full animate-bounce" style={{animationDelay: '1s'}}></div>
                 </div>
 
                 {/* Trending Music */}
@@ -147,30 +154,36 @@ const Index = () => {
                     <TrendingUp className="w-5 h-5 text-primary" />
                     Trending Now
                   </h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {trendingTracks.slice(0, 6).map((track) => (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {trendingTracks.slice(0, 6).map((track, index) => (
                       <div
                         key={track.id}
-                        className="bg-card rounded-lg p-4 shadow-card hover:shadow-glow transition-all duration-300 group cursor-pointer"
+                        className="bg-gradient-card rounded-2xl p-5 shadow-card hover:shadow-elevated transition-all duration-500 group cursor-pointer hover:scale-105 hover:-translate-y-1 animate-fade-in"
+                        style={{animationDelay: `${index * 0.1}s`}}
                         onClick={() => handlePlayTrack(track)}
                       >
-                        <div className="relative mb-3">
+                        <div className="relative mb-4">
                           <img
                             src={track.thumbnail}
                             alt={track.title}
-                            className="w-full aspect-video object-cover rounded-lg"
+                            className="w-full aspect-video object-cover rounded-xl transition-transform duration-300 group-hover:scale-105"
                           />
-                          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-lg">
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center rounded-xl backdrop-blur-sm">
                             <Button
                               variant="ghost"
                               size="sm"
-                              className="w-12 h-12 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground"
+                              className="w-14 h-14 rounded-full bg-white/90 hover:bg-white text-black transform scale-75 group-hover:scale-100 transition-all duration-300 shadow-lg"
                             >
-                              <Play className="w-6 h-6 ml-1" />
+                              <Play className="w-7 h-7 ml-1" />
                             </Button>
                           </div>
+                          <div className="absolute top-3 right-3 bg-black/50 rounded-full px-2 py-1 backdrop-blur-sm">
+                            <span className="text-xs text-white font-medium">
+                              {Math.floor(track.duration / 60)}:{(track.duration % 60).toString().padStart(2, '0')}
+                            </span>
+                          </div>
                         </div>
-                        <h3 className="font-medium text-sm mb-1 truncate">{track.title}</h3>
+                        <h3 className="font-semibold text-sm mb-2 truncate group-hover:text-primary transition-colors duration-300">{track.title}</h3>
                         <p className="text-xs text-muted-foreground truncate">{track.artist}</p>
                       </div>
                     ))}

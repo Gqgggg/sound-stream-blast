@@ -8,7 +8,7 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Music App Dark Theme */
+    /* Enhanced Music App Dark Theme */
     --background: 220 13% 9%;
     --foreground: 220 9% 95%;
 
@@ -20,6 +20,7 @@ All colors MUST be HSL.
 
     --primary: 280 100% 65%;
     --primary-foreground: 220 9% 95%;
+    --primary-glow: 280 100% 75%;
 
     --secondary: 220 13% 15%;
     --secondary-foreground: 220 9% 85%;
@@ -29,6 +30,7 @@ All colors MUST be HSL.
 
     --accent: 320 100% 70%;
     --accent-foreground: 220 9% 95%;
+    --accent-glow: 320 100% 80%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 220 9% 95%;
@@ -39,11 +41,22 @@ All colors MUST be HSL.
 
     --radius: 0.75rem;
 
-    /* Music App Specific Colors */
+    /* Enhanced Visual Effects */
     --gradient-primary: linear-gradient(135deg, hsl(280 100% 65%), hsl(320 100% 70%));
     --gradient-secondary: linear-gradient(135deg, hsl(220 13% 11%), hsl(220 13% 15%));
+    --gradient-mesh: radial-gradient(ellipse at top left, hsl(280 100% 65% / 0.1), transparent 50%), 
+                     radial-gradient(ellipse at bottom right, hsl(320 100% 70% / 0.1), transparent 50%);
+    --gradient-card: linear-gradient(145deg, hsl(220 13% 12%), hsl(220 13% 10%));
+    --gradient-hover: linear-gradient(145deg, hsl(220 13% 14%), hsl(220 13% 12%));
+    
     --shadow-glow: 0 0 40px hsl(280 100% 65% / 0.3);
     --shadow-card: 0 8px 32px hsl(220 13% 5% / 0.5);
+    --shadow-elevated: 0 12px 48px hsl(220 13% 3% / 0.7);
+    --shadow-player: 0 -4px 32px hsl(220 13% 5% / 0.8);
+    
+    /* Animation Properties */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     
     /* Player specific */
     --player-bg: 220 13% 8%;
@@ -113,5 +126,41 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    background-image: var(--gradient-mesh);
+    background-attachment: fixed;
+  }
+}
+
+@layer components {
+  .glass-effect {
+    @apply backdrop-blur-xl bg-white/5 border border-white/10;
+  }
+  
+  .card-gradient {
+    background: var(--gradient-card);
+  }
+  
+  .card-hover {
+    background: var(--gradient-hover);
+  }
+  
+  .music-visualizer {
+    @apply relative overflow-hidden;
+  }
+  
+  .music-visualizer::before {
+    content: '';
+    @apply absolute inset-0 opacity-20;
+    background: linear-gradient(45deg, 
+      hsl(280 100% 65% / 0.1) 0%, 
+      transparent 25%, 
+      transparent 75%, 
+      hsl(320 100% 70% / 0.1) 100%);
+    animation: visualizer 3s ease-in-out infinite;
+  }
+  
+  @keyframes visualizer {
+    0%, 100% { transform: translateX(-100%); }
+    50% { transform: translateX(100%); }
   }
 }

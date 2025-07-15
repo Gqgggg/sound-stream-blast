@@ -55,30 +55,39 @@ export default function MusicPlayer({
   }
 
   return (
-    <div className="bg-player-bg border-t border-border p-4">
-      <div className="flex items-center gap-4">
+    <div className="bg-gradient-card border-t border-border/50 p-4 shadow-player backdrop-blur-xl music-visualizer">
+      <div className="flex items-center gap-4 relative z-10">
         {/* Track Info */}
-        <div className="flex items-center gap-3 min-w-0 flex-1">
-          <img
-            src={currentTrack.thumbnail}
-            alt={currentTrack.title}
-            className="w-14 h-14 rounded-lg object-cover shadow-card"
-          />
-          <div className="min-w-0">
-            <h4 className="text-sm font-medium text-foreground truncate">
+        <div className="flex items-center gap-4 min-w-0 flex-1">
+          <div className="relative group">
+            <img
+              src={currentTrack.thumbnail}
+              alt={currentTrack.title}
+              className="w-16 h-16 rounded-xl object-cover shadow-elevated transition-transform duration-300 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-black/20 to-transparent"></div>
+          </div>
+          <div className="min-w-0 flex-1">
+            <h4 className="text-sm font-semibold text-foreground truncate mb-1">
               {currentTrack.title}
             </h4>
             <p className="text-xs text-muted-foreground truncate">
               {currentTrack.artist}
             </p>
+            <div className="flex items-center gap-1 mt-1">
+              <div className="w-1 h-1 rounded-full bg-primary animate-pulse"></div>
+              <span className="text-xs text-primary">Now Playing</span>
+            </div>
           </div>
           <Button
             variant="ghost"
             size="sm"
             onClick={() => setIsLiked(!isLiked)}
-            className="text-muted-foreground hover:text-primary"
+            className={`text-muted-foreground hover:text-primary transition-all duration-300 hover:scale-110 ${
+              isLiked ? 'text-red-500 hover:text-red-400' : ''
+            }`}
           >
-            <Heart className={`w-4 h-4 ${isLiked ? 'fill-primary text-primary' : ''}`} />
+            <Heart className={`w-5 h-5 ${isLiked ? 'fill-current' : ''}`} />
           </Button>
         </div>
 
@@ -105,12 +114,13 @@ export default function MusicPlayer({
             
             <Button
               onClick={onPlayPause}
-              className="w-10 h-10 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground shadow-glow"
+              className="w-12 h-12 rounded-full bg-gradient-primary hover:scale-110 text-white shadow-glow transition-all duration-300 hover:shadow-elevated relative overflow-hidden group"
             >
+              <div className="absolute inset-0 bg-white/20 rounded-full scale-0 group-hover:scale-100 transition-transform duration-500"></div>
               {isPlaying ? (
-                <Pause className="w-5 h-5" />
+                <Pause className="w-6 h-6 relative z-10" />
               ) : (
-                <Play className="w-5 h-5 ml-0.5" />
+                <Play className="w-6 h-6 ml-0.5 relative z-10" />
               )}
             </Button>
             
